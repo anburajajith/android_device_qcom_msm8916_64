@@ -45,7 +45,9 @@ PRODUCT_MODEL := MSM8916 for arm64
 #endif
 
 
+ifneq ($(PRODUCT_BRAND),YU) # We are using AOSP Radio pakcages
 PRODUCT_BOOT_JARS += qcom.fmradio
+endif
 
 #PRODUCT_BOOT_JARS += vcard
 PRODUCT_BOOT_JARS += tcmiface
