@@ -98,15 +98,19 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     camera2.portability.force_api=1
 PRODUCT_PACKAGES += wcnss_service
 
+# VENDOR_EDIT: We provide our own
+ifneq ($(PRODUCT_BRAND),YU)
 # MSM IRQ Balancer configuration file
 PRODUCT_COPY_FILES += \
     device/qcom/msm8916_64/msm_irqbalance.conf:system/vendor/etc/msm_irqbalance.conf
+endif
 
 #wlan driver
 PRODUCT_COPY_FILES += \
     device/qcom/msm8916_64/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
-    device/qcom/msm8916_64/WCNSS_wlan_dictionary.dat:persist/WCNSS_wlan_dictionary.dat \
-    device/qcom/msm8916_64/WCNSS_qcom_wlan_nv.bin:persist/WCNSS_qcom_wlan_nv.bin
+    device/qcom/msm8916_64/WCNSS_wlan_dictionary.dat:system/etc/firmware/wlan/prima/WCNSS_wlan_dictionary.dat \
+    device/qcom/msm8916_64/WCNSS_wlan_dictionary.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
+    device/qcom/msm8916_64/WCNSS_qcom_wlan_nv.bin:system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
 
 PRODUCT_PACKAGES += \
     wpa_supplicant_overlay.conf \
@@ -177,8 +181,13 @@ PRODUCT_PACKAGE_OVERLAYS := $(QCPATH)/qrdplus/Extension/res-overlay \
         $(PRODUCT_PACKAGE_OVERLAYS)
 endif
 
+# VENDOR_EDIT: Remove dm-verity support
+ifeq ($(PRODUCT_BRAND),YU)
+PRODUCT_SUPPORTS_VERITY := false
+else
 PRODUCT_SUPPORTS_VERITY := true
 PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/bootdevice/by-name/system
+endif
 
 # Sensor HAL conf file
 PRODUCT_COPY_FILES += \
