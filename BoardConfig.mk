@@ -8,11 +8,10 @@ TARGET_BOOTLOADER_BOARD_NAME := msm8916
 
 TARGET_COMPILE_WITH_MSM_KERNEL := true
 ifeq ($(PRODUCT_BRAND),YU)
-BOARD_KERNEL_SEPARATED_DT := false
+TARGET_KERNEL_APPEND_DTB := false
 else
-BOARD_KERNEL_SEPARATED_DT := true
-endif
 TARGET_KERNEL_APPEND_DTB := true
+endif
 
 USE_CLANG_PLATFORM_BUILD := true
 BOARD_USES_GENERIC_AUDIO := true
@@ -75,6 +74,7 @@ TARGET_USES_CSVT := true
 ifneq ($(PRODUCT_BRAND),YU)
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 earlyprintk
 endif
+BOARD_KERNEL_SEPARATED_DT := true
 
 BOARD_KERNEL_BASE        := 0x80000000
 BOARD_KERNEL_PAGESIZE    := 2048
